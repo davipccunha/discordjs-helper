@@ -1,0 +1,29 @@
+{
+  "name": "discordjs-helper",
+  "version": "1.0.0",
+  "description": "A package that contains some useful functions to complement discord.js library",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "author": "davipccunha",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.1",
+    "tsup": "^8.2.4",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [
+    "discord.js",
+    "discordjs",
+    "helper",
+    "discordjs-helper",
+    "discord",
+    "bot"
+  ]
+}
