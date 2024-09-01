@@ -1,5 +1,5 @@
 <p align=”center”>
-    <img alt="NPM Downloads" src="https://img.shields.io/npm/dy/discordjs-helper">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/dy/%40davipccunha%2Fdiscordjs-helper">
 </p>
 
 # About

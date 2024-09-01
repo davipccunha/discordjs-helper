@@ -1,5 +1,9 @@
 import { PermissionResolvable } from "discord.js";
 
+/**
+ * Decorating an interaction class with this decorator will make it so that it will only execute if the user has all of the specified permissions.
+ * @param permissions The permissions to check for.
+ */
 export function RequirePermission(...permissions: PermissionResolvable[]) {
     return function (constructor: any) {
         const originalExecute = constructor.prototype.execute;

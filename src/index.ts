@@ -11,7 +11,6 @@ export * from './models/CustomCommand';
 export * from './models/CustomInteraction';
 export * from './models/CustomModalInteraction';
 export * from './models/CustomSelectMenuInteraction';
-export * from './models/DiscordEvent';
 export * from './models/ExtendedClient';
 
 export * from './utils/utils';
