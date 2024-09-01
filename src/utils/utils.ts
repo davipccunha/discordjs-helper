@@ -1,34 +1,4 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
 import { BaseInteraction, InteractionReplyOptions, InteractionResponse, Message } from 'discord.js';
-
-/**
- * Gets all files in a directory and its subdirectories.
- * @param rootDirectory The directory to start the search.
- * @param allFiles The initial array of files.
- * @returns An array containing all files in the directory and its subdirectories.
- * @throws 
- */
-export function recursiveFiles(rootDirectory: string, allFiles: string[] = []): Promise<string[]> {
-    try {
-        const filesInRoot = fs.readdirSync(rootDirectory);
-        for (const file of filesInRoot) {
-            const absolute = path.join(rootDirectory, file);
-            if (fs.statSync(absolute).isDirectory()) {
-                recursiveFiles(absolute, allFiles);
-            } else {
-                allFiles.push(absolute);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-    }
-
-    return new Promise(resolve => {
-        resolve(allFiles);
-    });
-}
 
 export function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
