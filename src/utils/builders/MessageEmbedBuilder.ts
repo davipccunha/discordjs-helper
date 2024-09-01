@@ -1,5 +1,4 @@
 import { ColorResolvable, Embed, EmbedBuilder, EmbedData } from "discord.js";
-import config from '../../config.json';
 import { ExtendedClient } from "../../models/ExtendedClient";
 
 type EmbedField = {
@@ -27,6 +26,7 @@ type EmbedInitialData = {
     defaultFooter?: boolean
 }
 
+
 export class MessageEmbedBuilder {
     private embed: EmbedBuilder;
 
@@ -34,7 +34,7 @@ export class MessageEmbedBuilder {
         data = {
             title: data.title,
             description: data.description || " ",
-            color: data.color || config.embedColor as ColorResolvable,
+            color: data.color || "NotQuiteBlack",
             showTimestamp: data.showTimestamp ?? true,
             defaultFooter: data.defaultFooter ?? true
         };

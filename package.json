@@ -1,6 +1,6 @@
 {
-  "name": "discordjs-helper",
-  "version": "1.0.0",
+  "name": "@davipccunha/discordjs-helper",
+  "version": "1.0.1",
   "description": "A package that contains some useful functions to complement discord.js library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -17,6 +17,10 @@
     "@types/node": "^20.9.1",
     "tsup": "^8.2.4",
     "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davipccunha/discordjs-helper.git"
   },
   "keywords": [
     "discord.js",
