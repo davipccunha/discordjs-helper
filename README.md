@@ -79,7 +79,7 @@ You should always register all your interactions using one of the following meth
 Then, the package handles it when an interaction is created
 
 # Found a problem?
-Please let me know of any problems found by filing an issue at [GitHub issue](https://github.com/davipccunha/discordjs-helper/issues). If you have a suggestion or just want to contact me, please send an email to davipccunha@gmail.com
+Please let me know of any problems found by opening an issue at [GitHub issue](https://github.com/davipccunha/discordjs-helper/issues). If you have a suggestion or just want to contact me, please send an email to davipccunha@gmail.com
 
 # Known issues
 Here is the list of already known problems that I might be working on a fix:

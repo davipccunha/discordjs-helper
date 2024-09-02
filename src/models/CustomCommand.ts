@@ -2,7 +2,7 @@ import { ApplicationCommandOptionChoiceData, ApplicationCommandOptionType, Appli
 import { CustomInteraction } from "./CustomInteraction";
 import { ExtendedClient } from "./ExtendedClient";
 
-export interface CommandOption {
+export type CommandOption = {
     name: string;
     description: string;
     type: ApplicationCommandOptionType;
@@ -11,15 +11,15 @@ export interface CommandOption {
     options?: CommandOption[];
 }
 
-export interface NumberCommandOption extends CommandOption {
+export type NumberCommandOption = CommandOption & {
     type: ApplicationCommandOptionType.Integer | ApplicationCommandOptionType.Number;
     minValue?: number;
     maxValue?: number;
 }
 
-export interface StringCommandOption extends CommandOption {
+export type StringCommandOption = CommandOption & {
     type: ApplicationCommandOptionType.String;
-    minLength: number;
+    minLength?: number;
     maxLength?: number;
 }
 
