@@ -1,6 +1,6 @@
 {
   "name": "@davipccunha/discordjs-helper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A package that contains some useful functions to complement discord.js library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
