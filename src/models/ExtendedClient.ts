@@ -8,6 +8,7 @@ import { CustomCommandInteraction } from "./CustomCommandInteraction";
 import { CustomInteraction } from './CustomInteraction';
 import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
+import { MessageEmbedBuilder } from "../utils/builders/MessageEmbedBuilder";
 
 export class ExtendedClient extends Client {
     protected readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
@@ -195,6 +196,8 @@ export class ExtendedClient extends Client {
     protected async handleEvents() {
         this.once('ready', async () => {
             console.log(`Client logged in @ ${new Date().toLocaleString()}`);
+
+            MessageEmbedBuilder.defaultFooter = { text: this.user!.username, iconURL: this.user!.displayAvatarURL({ forceStatic: false }) };
         });
 
         this.on('interactionCreate', async interaction => {

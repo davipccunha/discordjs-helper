@@ -1,24 +1,24 @@
 import { ColorResolvable, Embed, EmbedBuilder, EmbedData } from "discord.js";
 import { ExtendedClient } from "../../models/ExtendedClient";
 
-type EmbedField = {
+export type EmbedField = {
     name: string,
     value: string,
     inline?: boolean
 }
 
-type EmbedAuthor = {
+export type EmbedAuthor = {
     name: string,
     url?: string,
     iconURL?: string
 }
 
-type EmbedFooter = {
+export type EmbedFooter = {
     text: string,
     iconURL?: string
 }
 
-type EmbedInitialData = {
+export type EmbedInitialData = {
     title?: string,
     description?: string,
     color?: ColorResolvable,
@@ -29,12 +29,14 @@ type EmbedInitialData = {
 
 export class MessageEmbedBuilder {
     private embed: EmbedBuilder;
+    static defaultFooter: EmbedFooter | null;
+    static defaultColor: ColorResolvable = "NotQuiteBlack";
 
-    constructor(client: ExtendedClient, data: EmbedInitialData) {
+    constructor(data: EmbedInitialData) {
         data = {
             title: data.title,
             description: data.description || " ",
-            color: data.color || "NotQuiteBlack",
+            color: data.color || MessageEmbedBuilder.defaultColor,
             showTimestamp: data.showTimestamp ?? true,
             defaultFooter: data.defaultFooter ?? true
         };
@@ -48,8 +50,22 @@ export class MessageEmbedBuilder {
             this.embed.setTitle(data.title);
         if (data.showTimestamp)
             this.embed.setTimestamp();
-        if (data.defaultFooter)
-            this.embed.setFooter({ text: client.user!.username, iconURL: client.user!.displayAvatarURL({ forceStatic: false }) });
+        this.embed.setFooter(MessageEmbedBuilder.defaultFooter);
+    }
+
+    setDefaultColor(color: ColorResolvable) {
+        MessageEmbedBuilder.defaultColor = color;
+        return this;
+    }
+
+    setDefaultFooter(footer: EmbedFooter | null) {
+        MessageEmbedBuilder.defaultFooter = footer;
+        return this;
+    }
+
+    setTitle(title: string) {
+        this.embed.setTitle(title);
+        return this;
     }
 
     setDescription(description: string) {
@@ -96,6 +112,11 @@ export class MessageEmbedBuilder {
         return this;
     }
 
+    setTimestamp(timestamp: number) {
+        this.embed.setTimestamp(timestamp);
+        return this
+    }
+
     setURL(url: string) {
         this.embed.setURL(url);
         return this;
@@ -105,8 +126,8 @@ export class MessageEmbedBuilder {
         return this.embed;
     }
 
-    static from(client: ExtendedClient, embed: Embed) {
-        const builder = new MessageEmbedBuilder(client, embed as EmbedInitialData);
+    static from(embed: Embed) {
+        const builder = new MessageEmbedBuilder(embed as EmbedInitialData);
         builder.embed = EmbedBuilder.from(embed);
 
         return builder;
