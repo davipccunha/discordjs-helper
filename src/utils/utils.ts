@@ -47,6 +47,29 @@ function extendArray() {
         configurable: true,
         enumerable: false
     });
+
+    Object.defineProperty(Array.prototype, 'draw', {
+        value: function (number = 1) {
+            const result: unknown[] = [];
+
+            if (number >= this.length) {
+                return this;
+            }
+
+            while (result.length < number) {
+                let element: unknown = this.random();
+
+                if (!result.includes(element)) {
+                    result.push(element);
+                }
+            }
+    
+            return result;
+        },
+        writable: true,
+        configurable: true,
+        enumerable: false
+    });
 }
 
 function extendBaseInteraction() {

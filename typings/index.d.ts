@@ -6,6 +6,13 @@ declare global {
          * @returns A random element from the array.
          */
         random(): T;
+
+        /**
+         * Gets a number of random different elements from the array.
+         * @param number The number of elements to draw. Defaults to 1.
+         * @returns An array containing the drawn elements.
+         */
+        draw(number?: number): T[];
     }
 }
 
