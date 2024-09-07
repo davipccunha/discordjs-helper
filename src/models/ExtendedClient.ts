@@ -10,10 +10,10 @@ import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
 
 export class ExtendedClient extends Client {
-    private readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
-    private readonly buttons: Collection<string, CustomButtonInteraction> = new Collection();
-    private readonly selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
-    private readonly modals: Collection<string, CustomModalInteraction> = new Collection();
+    protected readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
+    protected readonly buttons: Collection<string, CustomButtonInteraction> = new Collection();
+    protected readonly selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
+    protected readonly modals: Collection<string, CustomModalInteraction> = new Collection();
 
     constructor(token: string) {
         super({
@@ -95,7 +95,7 @@ export class ExtendedClient extends Client {
         }
     }
 
-    private async registerInteractions() {
+    protected async registerInteractions() {
         for (const command of commandsInstances) {
             this.commands.set(command.name, command);
         }
@@ -113,14 +113,14 @@ export class ExtendedClient extends Client {
         }
     }
 
-    private async createCommands(guild: Guild) {
+    protected async createCommands(guild: Guild) {
         for (const command of this.commands.values()) {
             const discordCommand = command as CustomCommandInteraction<CommandInteraction> as ApplicationCommandDataResolvable;
             await guild.commands.create(discordCommand).catch(console.error);
         }
     }
 
-    private async unregisterCommand(commandName: string, guild: Guild) {
+    protected async unregisterCommand(commandName: string, guild: Guild) {
         guild.commands.create({
             name: commandName,
             description: 'Deleted'
@@ -192,7 +192,7 @@ export class ExtendedClient extends Client {
     }
 
     // Logs a message when the client becomes ready and handle interactions (commands, buttons, select menus, modals)
-    private async handleEvents() {
+    protected async handleEvents() {
         this.once('ready', async () => {
             console.log(`Client logged in @ ${new Date().toLocaleString()}`);
         });
