@@ -8,6 +8,6 @@ export type CustomInteractionType =
     | ModalSubmitInteraction;
 
 export interface CustomInteraction<T extends CustomInteractionType> {
-    name: string;
+    readonly name: string;
     execute: (interaction: T, client: ExtendedClient) => Promise<void>;
 }

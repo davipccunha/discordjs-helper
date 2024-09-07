@@ -24,21 +24,19 @@ npm install @davipccunha/discordjs-helper
 
 ## Creating a new slash command
 ```typescript
+import { CustomChatInputCommand, ExtendedClient, RegisterCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
 import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
-import { CustomChatInputCommand, ExtendedClient, RequirePermission } from "@davipccunha/discordjs-helper";
 
+@RegisterCommandInteraction("ping", "Ping the bot!")
 @RequirePermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
-    name: string;
+    name!: string;
     type: ApplicationCommandType.ChatInput;
-    description: string;
-    defaultPermission: boolean;
+    description!: string;
+    defaultPermission!: boolean;
 
     constructor() {
-        this.name = "ping";
         this.type = ApplicationCommandType.ChatInput;
-        this.description = "Ping the bot!";
-        this.defaultPermission = true;
     }
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
@@ -48,33 +46,48 @@ export class PingCommand implements CustomChatInputCommand {
 ```
 
 ## Registering slash commands
-  Commands should be registered using the ExtendedClient#registerCommands() method and then sent to Discord API using ExtendedClient#loadCommands().
+  Commands should be either registered using the ExtendedClient#registerCommands() method or by decorating its class with @RegisterCommandInteraction(name, description) and then sent to Discord API using ExtendedClient#loadCommands(). Due to how Node.js loads the modules, a module that contains a command class decorated with @RegisterCommandInteraction must be imported in some point of your program
 
 ```typescript
-import { ExtendedClient } from "@davipccunha/discordjs-helper";
-import { PingCommand } from "./interactions/commands/PingCommand.js";
+import path from 'path';
+import { pathToFileURL } from 'url';
+import { ExtendedClient, recursiveFiles } from "@davipccunha/discordjs-helper";
 
 const client = new ExtendedClient("TOKEN GOES HERE");
 
-client.registerCommands(new PingCommand());
+await registerInteractions();
 
-client.start();
+client.start(true);
 
-client.loadCommands("GUILD ID 1", "GUILD ID 2", "...");
+client.loadCommands("GUILD ID 1", "GUILD ID 2", ...);
+
+async function registerInteractions() {
+    // This code gets all files inside the dist/interactions folder and loads them so interactions decorated with @Register<Type>Interaction are correctly cached
+    const interactions = await recursiveFiles("dist/interactions");
+    for (const interaction of interactions) {
+        const fileName = interaction.replaceAll('\\', '/');
+        const absolutePath = path.resolve(fileName);
+
+        const fileUrl = pathToFileURL(absolutePath).href;
+
+        await import(fileUrl);
+    }
+}
 ```
 
-### Together, the two code snippets above is all there is to get your first slash command working
-
-
-
+### Together, the two code snippets above is all there is to get your first slash command working.
+The example provided on how to register the commands is a simple way of loading all modules, regardless of how many interactions you have, instead of having to instantiate each one of them and pass them as parameter to the register methods
 <br>
 
 # Reminders
-You should always register all your interactions using one of the following methods in Extended Client: 
+For interactions decorated with @Register...Interaction, the module in which they are defined must be imported somewhere in your code due to how Node.js loads modules
+
+You can always register all your interactions using one of the following methods in Extended Client: 
 - registerCommands()
 - registerButtons()
 - registerSelectMenus()
 - registerModals()
+and passing false as argument to the ExtendedClient#start() method
 
 Then, the package handles it when an interaction is created
 
@@ -82,7 +95,7 @@ Then, the package handles it when an interaction is created
 Please let me know of any problems found by opening an issue at [GitHub issue](https://github.com/davipccunha/discordjs-helper/issues). If you have a suggestion or just want to contact me, please send an email to davipccunha@gmail.com
 
 # Known issues
-Here is the list of already known problems that I might be working on a fix:
+Here is the list of already known problems or features that I might be working on:
 
 -
 

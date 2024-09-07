@@ -1,15 +1,19 @@
 import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
+import { buttonsInstances } from "../utils/decorators/RegisterButtonInteraction";
+import { commandsInstances } from "../utils/decorators/RegisterCommandInteraction";
+import { modalsInstances } from "../utils/decorators/RegisterModalInteraction";
+import { selectMenusInstances } from "../utils/decorators/RegisterSelectMenuInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
-import { CustomCommand } from "./CustomCommand";
+import { CustomCommandInteraction } from "./CustomCommandInteraction";
 import { CustomInteraction } from './CustomInteraction';
 import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
 
 export class ExtendedClient extends Client {
-    readonly commands: Collection<string, CustomCommand<CommandInteraction>> = new Collection();
-    readonly buttons: Collection<string, CustomButtonInteraction> = new Collection();
-    readonly selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
-    readonly modals: Collection<string, CustomModalInteraction> = new Collection();
+    private readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
+    private readonly buttons: Collection<string, CustomButtonInteraction> = new Collection();
+    private readonly selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
+    private readonly modals: Collection<string, CustomModalInteraction> = new Collection();
 
     constructor(token: string) {
         super({
@@ -39,37 +43,97 @@ export class ExtendedClient extends Client {
         this.token = token;
     }
 
-    public async registerCommands(...commands: CustomCommand<CommandInteraction>[]) {
+    /**
+     * Caches the commands to respond to their interactions once they are triggered
+     * @param commands The commands to register
+     * 
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterCommandInteraction` instead
+     * @see RegisterCommandInteraction
+     */
+    public async registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]) {
         for (const command of commands) {
             this.commands.set(command.name, command);
         }
     }
 
+    /**
+     * Caches the buttons to respond to their interactions once they are triggered
+     * @param buttons The buttons to register
+     * 
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButtonInteraction` instead
+     * @see RegisterButtonInteraction
+     */
     public async registerButtons(...buttons: CustomInteraction<ButtonInteraction>[]) {
         for (const button of buttons) {
             this.buttons.set(button.name, button);
         }
     }
 
+    /**
+     * Caches the select menus to respond to their interactions once they are triggered
+     * @param selectMenus The select menus to register
+     * 
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterSelectMenuInteraction` instead
+     * @see RegisterSelectMenuInteraction
+     */
     public async registerSelectMenus(...selectMenus: CustomInteraction<StringSelectMenuInteraction>[]) {
         for (const selectMenu of selectMenus) {
             this.selectMenus.set(selectMenu.name, selectMenu);
         }
     }
 
+    /**
+     * Caches the modals to respond to their interactions once they are triggered
+     * @param modals The modals to register
+     * 
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModalInteraction` instead
+     * @see RegisterModalInteraction
+     */
     public async registerModals(...modals: CustomInteraction<ModalSubmitInteraction>[]) {
         for (const modal of modals) {
             this.modals.set(modal.name, modal);
         }
     }
 
+    private async registerInteractions() {
+        for (const command of commandsInstances) {
+            this.commands.set(command.name, command);
+        }
+
+        for (const button of buttonsInstances) {
+            this.buttons.set(button.name, button);
+        }
+
+        for (const selectMenu of selectMenusInstances) {
+            this.selectMenus.set(selectMenu.name, selectMenu);
+        }
+
+        for (const modal of modalsInstances) {
+            this.modals.set(modal.name, modal);
+        }
+    }
+
     private async createCommands(guild: Guild) {
         for (const command of this.commands.values()) {
-            const discordCommand = command as CustomCommand<CommandInteraction> as ApplicationCommandDataResolvable;
+            const discordCommand = command as CustomCommandInteraction<CommandInteraction> as ApplicationCommandDataResolvable;
             await guild.commands.create(discordCommand).catch(console.error);
         }
     }
 
+    private async unregisterCommand(commandName: string, guild: Guild) {
+        guild.commands.create({
+            name: commandName,
+            description: 'Deleted'
+        }).then(command => {
+            command.delete();
+            console.log(`Command ${commandName} deleted`);
+        }).catch(console.error);
+    }
+
+    /**
+     * Creates the registered commands in the specified guilds
+     * @param guildIDs The IDs of the guilds to create the commands in. If no IDs are provided, the commands will be created in all guilds the bot is in
+     */
     public async loadCommands(...guildIDs: string[]) {
         this.once('ready', async () => {
             if (guildIDs.length === 0) {
@@ -88,7 +152,34 @@ export class ExtendedClient extends Client {
         });
     }
 
-    async asMember(guildID: string) {
+    public async deleteCommands(commandsNames: string[], guildIDs: string[] = []) {
+        this.once('ready', async () => {
+            if (guildIDs.length === 0) {
+                this.guilds.cache.forEach(async guild => {
+                    for (const commandName of commandsNames) {
+                        await this.unregisterCommand(commandName, guild);
+                    }
+                });
+            } else {
+                for (const guildID of guildIDs) {
+                    const guild = await this.guilds.fetch(guildID);
+
+                    if (!guild) return;
+
+                    for (const commandName of commandsNames) {
+                        await this.unregisterCommand(commandName, guild);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Returns the bot as a member of a guild
+     * @param guildID The ID of the guild
+     * @returns Member representation of the bot
+     */
+    public async asMember(guildID: string) {
         if (!this.user) return null;
 
         const guild = await this.guilds.fetch(guildID).catch(console.error);
@@ -100,10 +191,11 @@ export class ExtendedClient extends Client {
         return member;
     }
 
+    // Logs a message when the client becomes ready and handle interactions (commands, buttons, select menus, modals)
     private async handleEvents() {
         this.once('ready', async () => {
             console.log(`Client logged in @ ${new Date().toLocaleString()}`);
-        })
+        });
 
         this.on('interactionCreate', async interaction => {
             if (interaction.isCommand()) {
@@ -130,8 +222,15 @@ export class ExtendedClient extends Client {
         });
     }
 
-    async start() {
+    /**
+     * Logs the bot, registers the interactions and starts listening to the interactionCreate event
+     * @param registerInteractions This should be set to `false` if you are not using TS or prefer not to use the decorators to the interactions
+     */
+    async start(registerInteractions = true) {
         await this.login();
+
+        if (registerInteractions) await this.registerInteractions();
+
         await this.handleEvents();
     }
 }

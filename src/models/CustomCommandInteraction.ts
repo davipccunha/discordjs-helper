@@ -23,7 +23,7 @@ export type StringCommandOption = CommandOption & {
     maxLength?: number;
 }
 
-export interface CustomCommand<K extends CommandInteraction> extends CustomInteraction<K> {
+export interface CustomCommandInteraction<K extends CommandInteraction> extends CustomInteraction<K> {
     readonly type: ApplicationCommandType;
     readonly defaultPermission: boolean;
     readonly description: string;
@@ -31,18 +31,19 @@ export interface CustomCommand<K extends CommandInteraction> extends CustomInter
 }
 
 
-export interface CustomChatInputCommand extends CustomCommand<ChatInputCommandInteraction> {
+
+export interface CustomChatInputCommand extends CustomCommandInteraction<ChatInputCommandInteraction> {
     readonly type: ApplicationCommandType.ChatInput;
     readonly description: string;
     readonly options?: CommandOption[];
 }
 
-export interface CustomMessageCommand extends CustomCommand<MessageContextMenuCommandInteraction> {
+export interface CustomMessageCommand extends CustomCommandInteraction<MessageContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.Message;
     readonly description: never;
 }
 
-export interface CustomUserCommand extends CustomCommand<UserContextMenuCommandInteraction> {
+export interface CustomUserCommand extends CustomCommandInteraction<UserContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.User;
     readonly description: never;
 }
