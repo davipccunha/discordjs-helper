@@ -5,7 +5,7 @@
  * @throws {Error} If the class does not have an 'execute' method.
  */
 export function NoReplyInteraction() {
-    return function (constructor: any) {
+    return function (constructor: Function) {
         const originalExecute = constructor.prototype.execute;
 
         if (typeof originalExecute !== 'function') {

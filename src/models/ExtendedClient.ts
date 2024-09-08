@@ -1,8 +1,5 @@
 import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
-import { buttonsInstances } from "../utils/decorators/RegisterButtonInteraction";
-import { commandsInstances } from "../utils/decorators/RegisterCommandInteraction";
-import { modalsInstances } from "../utils/decorators/RegisterModalInteraction";
-import { selectMenusInstances } from "../utils/decorators/RegisterSelectMenuInteraction";
+import { commandsInstances, buttonsInstances, selectMenusInstances, modalsInstances } from "../utils/decorators/RegisterInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
 import { CustomCommandInteraction } from "./CustomCommandInteraction";
 import { CustomInteraction } from './CustomInteraction';
