@@ -1,8 +1,8 @@
-import { BaseInteraction, ButtonInteraction, CommandInteraction, GuildMember, ModalSubmitInteraction, PermissionResolvable, StringSelectMenuInteraction } from "discord.js";
+import { GuildMember, PermissionResolvable } from "discord.js";
 import { CustomInteractionType } from "../../models/CustomInteraction";
 
 /**
- * Decorating an interaction class with this decorator will make it so that it will only execute if the user has all of the specified permissions.
+ * Decorating an interaction class with this will make it so that it will only execute if the member has all of the specified permissions in the guild scope.
  * @param permissions The permissions to check for.
  */
 export function RequireMemberPermission(...permissions: PermissionResolvable[]) {
@@ -29,6 +29,10 @@ export function RequireMemberPermission(...permissions: PermissionResolvable[]) 
     };
 }
 
+/**
+ * Decorating an interaction class with this will make it so that it will only execute if the member has all of the specified permissions in the interaction channel.
+ * @param permissions The permissions to check for.
+ */
 export function RequireChannelPermission(...permissions: PermissionResolvable[]) {
     return function (constructor: any) {
         const originalExecute = constructor.prototype.execute;

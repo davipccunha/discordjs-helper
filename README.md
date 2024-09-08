@@ -28,7 +28,7 @@ import { CustomChatInputCommand, ExtendedClient, RegisterCommandInteraction, Req
 import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
 @RegisterCommandInteraction("ping", "Ping the bot!")
-@RequirePermission(PermissionFlagsBits.Administrator)
+@RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
     type!: ApplicationCommandType.ChatInput;
