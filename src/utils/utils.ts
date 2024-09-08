@@ -1,6 +1,6 @@
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
-import { BaseInteraction, InteractionReplyOptions, InteractionResponse, Message } from 'discord.js';
+import { BaseInteraction, InteractionReplyOptions, InteractionResponse, Message, StringSelectMenuInteraction } from 'discord.js';
 
 export function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -35,7 +35,7 @@ export function recursiveFiles(rootDirectory: string, allFiles: string[] = []): 
 // REVIEW: Should these implementations be made here?
 export function extendTypes() {
     extendArray();
-    extendBaseInteraction();
+    extendDiscordJS();
 }
 
 function extendArray() {
@@ -63,13 +63,18 @@ function extendArray() {
                     result.push(element);
                 }
             }
-    
+
             return result;
         },
         writable: true,
         configurable: true,
         enumerable: false
     });
+}
+
+function extendDiscordJS() {
+    extendBaseInteraction();
+    extendStringSelectMenuInteraction();
 }
 
 function extendBaseInteraction() {
@@ -81,6 +86,18 @@ function extendBaseInteraction() {
                 return await this.reply(reply);
             }
         },
+        writable: true,
+        configurable: true,
+        enumerable: false
+    });
+}
+
+function extendStringSelectMenuInteraction() {
+    Object.defineProperty(StringSelectMenuInteraction.prototype, 'clearSelection', {
+        value: async function () {
+            await this.message.edit({ components: this.message.components });
+        },
+
         writable: true,
         configurable: true,
         enumerable: false

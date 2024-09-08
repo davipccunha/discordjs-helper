@@ -25,6 +25,15 @@ declare module 'discord.js' {
         */
         replyOrFollowUp(reply: InteractionReplyOptions): Promise<Message<boolean>> | Promise<InteractionResponse<boolean>>;
     }
+
+    interface StringSelectMenuInteraction {
+        /**
+         * Clears the selection of the select menu.
+         * 
+         * @note This is not recommended since it resets the select menu for all users, but it is currently the only way to clear the selection.
+         */
+        clearSelection(): Promise<void>;
+    }
 }
 
 export { };
