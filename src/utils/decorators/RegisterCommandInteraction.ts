@@ -1,4 +1,4 @@
-import { CommandInteraction } from "discord.js";
+import { ApplicationCommandType, CommandInteraction } from "discord.js";
 import { CustomCommandInteraction } from "../../models/CustomCommandInteraction";
 
 /** @ignore */
@@ -12,11 +12,12 @@ export const commandsInstances = new Set<CustomCommandInteraction<CommandInterac
  * 
  * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
  */
-export function RegisterCommandInteraction(name: string, description: string, defaultPermission = true) {
+export function RegisterCommandInteraction(name: string, description: string, defaultPermission = true, type: ApplicationCommandType = 1) {
     return function <T extends { new(...args: any[]): CustomCommandInteraction<CommandInteraction> }>(clazz: T) {
         clazz.prototype.name = name;
         clazz.prototype.description = description;
         clazz.prototype.defaultPermission = defaultPermission;
+        clazz.prototype.type = type;
 
         commandsInstances.add(clazz.prototype);
 

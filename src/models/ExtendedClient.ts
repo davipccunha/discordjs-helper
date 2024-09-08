@@ -116,7 +116,7 @@ export class ExtendedClient extends Client {
 
     protected async createCommands(guild: Guild) {
         for (const command of this.commands.values()) {
-            const discordCommand = command as CustomCommandInteraction<CommandInteraction> as ApplicationCommandDataResolvable;
+            const discordCommand = command as ApplicationCommandDataResolvable;
             await guild.commands.create(discordCommand).catch(console.error);
         }
     }
