@@ -27,7 +27,7 @@ npm install @davipccunha/discordjs-helper
 import { CustomChatInputCommand, ExtendedClient, RegisterCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
 import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
-@RegisterCommandInteraction("ping", "Ping the bot!")
+@RegisterCommandInteraction("ping", "Ping the bot!", true, 1)
 @RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
@@ -49,6 +49,8 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 import { ExtendedClient, recursiveFiles } from "@davipccunha/discordjs-helper";
 
+setConstants();
+
 const client = new ExtendedClient("TOKEN GOES HERE");
 
 await registerInteractions();
@@ -68,7 +70,11 @@ async function registerInteractions() {
 
         await import(fileUrl);
     }
-}
+};
+
+function setConstants() {
+    ErrorMessages.NoPermission = "You don't have permission to do that";
+};
 ```
 
 ### Together, the two code snippets above is all there is to get your first slash command working.

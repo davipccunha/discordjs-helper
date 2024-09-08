@@ -1,12 +1,13 @@
 import { GuildMember, PermissionResolvable } from "discord.js";
 import { CustomInteractionType } from "../../models/CustomInteraction";
+import { ErrorMessages } from "../../models/ErrorMessages";
 
 /**
  * Decorating an interaction class with this will make it so that it will only execute if the member has all of the specified permissions in the guild scope.
  * @param permissions The permissions to check for.
  */
 export function RequireMemberPermission(...permissions: PermissionResolvable[]) {
-    return function (constructor: any) {
+    return function (constructor: Function) {
         const originalExecute = constructor.prototype.execute;
 
         if (typeof originalExecute !== 'function') {
@@ -20,7 +21,7 @@ export function RequireMemberPermission(...permissions: PermissionResolvable[]) 
             const hasPermission = (interaction.member as GuildMember).permissions.has(permissions);
 
             if (!hasPermission) {
-                await interaction.replyOrFollowUp({ content: 'Você não tem permissão para fazer isso.', ephemeral: true });
+                await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
                 return;
             }
 
@@ -34,7 +35,7 @@ export function RequireMemberPermission(...permissions: PermissionResolvable[]) 
  * @param permissions The permissions to check for.
  */
 export function RequireChannelPermission(...permissions: PermissionResolvable[]) {
-    return function (constructor: any) {
+    return function (constructor: Function) {
         const originalExecute = constructor.prototype.execute;
 
         if (typeof originalExecute !== 'function') {
@@ -50,7 +51,7 @@ export function RequireChannelPermission(...permissions: PermissionResolvable[])
             const hasPermission = interaction.channel.permissionsFor(interaction.member as GuildMember).has(permissions);
 
             if (!hasPermission) {
-                await interaction.replyOrFollowUp({ content: 'Você não tem permissão para fazer isso.', ephemeral: true });
+                await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
                 return;
             }
 

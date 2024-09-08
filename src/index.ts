@@ -11,6 +11,7 @@ export * from './models/CustomCommandInteraction';
 export * from './models/CustomInteraction';
 export * from './models/CustomModalInteraction';
 export * from './models/CustomSelectMenuInteraction';
+export * from './models/ErrorMessages';
 export * from './models/ExtendedClient';
 
 export * from './utils/utils';
