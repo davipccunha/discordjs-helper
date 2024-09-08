@@ -31,13 +31,9 @@ import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBit
 @RequirePermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
-    type: ApplicationCommandType.ChatInput;
+    type!: ApplicationCommandType.ChatInput;
     description!: string;
     defaultPermission!: boolean;
-
-    constructor() {
-        this.type = ApplicationCommandType.ChatInput;
-    }
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
         await interaction.reply("Pong!");
