@@ -21,7 +21,8 @@ export function RequireMemberPermission(...permissions: PermissionResolvable[]) 
             const hasPermission = (interaction.member as GuildMember).permissions.has(permissions);
 
             if (!hasPermission) {
-                await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
+                if (ErrorMessages.NoPermission)
+                    await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
                 return;
             }
 
@@ -51,7 +52,8 @@ export function RequireChannelPermission(...permissions: PermissionResolvable[])
             const hasPermission = interaction.channel.permissionsFor(interaction.member as GuildMember).has(permissions);
 
             if (!hasPermission) {
-                await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
+                if (ErrorMessages.NoPermission)
+                    await interaction.replyOrFollowUp({ content: ErrorMessages.NoPermission, ephemeral: true });
                 return;
             }
 

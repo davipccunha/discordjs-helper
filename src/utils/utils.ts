@@ -43,6 +43,7 @@ function extendArray() {
         value: function () {
             return this[Math.floor(Math.random() * this.length)];
         },
+        
         writable: true,
         configurable: true,
         enumerable: false
@@ -66,6 +67,7 @@ function extendArray() {
 
             return result;
         },
+
         writable: true,
         configurable: true,
         enumerable: false
@@ -86,6 +88,7 @@ function extendBaseInteraction() {
                 return await this.reply(reply);
             }
         },
+
         writable: true,
         configurable: true,
         enumerable: false
