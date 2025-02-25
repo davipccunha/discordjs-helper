@@ -24,10 +24,10 @@ npm install @davipccunha/discordjs-helper
 
 ## Creating a new slash command
 ```typescript
-import { CustomChatInputCommand, ExtendedClient, RegisterCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
+import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
 import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
-@RegisterCommandInteraction("ping", "Ping the bot!", true, 1)
+@RegisterChatInputCommandInteraction("ping", "Ping the bot!")
 @RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
@@ -98,7 +98,7 @@ You can always register all your interactions using one of the following methods
 - registerModals()
 and passing false as argument to the ExtendedClient#start() method
 
-Then, the package handles it when an interaction is created
+Then, the package handles the rest, including when an interaction is created
 
 # Found a problem?
 Please let me know of any problems found by opening an issue at [GitHub issue](https://github.com/davipccunha/discordjs-helper/issues). If you have a suggestion or just want to contact me, please send an email to davipccunha@gmail.com

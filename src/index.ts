@@ -18,4 +18,4 @@ export * from './utils/utils';
 export * from './utils/builders/MessageEmbedBuilder';
 export * from './utils/decorators/NoReplyInteraction';
 export * from './utils/decorators/RequirePermission';
-export { RegisterCommandInteraction, RegisterButtonInteraction, RegisterSelectMenuInteraction, RegisterModalInteraction } from './utils/decorators/RegisterInteraction';
+export { RegisterChatInputCommandInteraction, RegisterMessageCommandInteraction, RegisterUserCommandInteraction, RegisterButtonInteraction, RegisterSelectMenuInteraction, RegisterModalInteraction } from './utils/decorators/RegisterInteraction';
