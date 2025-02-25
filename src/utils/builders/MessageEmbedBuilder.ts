@@ -81,7 +81,10 @@ export class MessageEmbedBuilder {
     }
 
     setFields(...fields: EmbedField[]) {
-        for (const field of fields) field.inline = !!field.inline;
+        for (const field of fields) {
+            field.inline = !!field.inline;
+            field.value = field.value.toString();
+        }
 
         this.embed.setFields(fields);
         return this;

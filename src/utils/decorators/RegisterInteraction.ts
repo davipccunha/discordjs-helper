@@ -1,5 +1,5 @@
 import { CommandInteraction, ApplicationCommandType } from "discord.js";
-import { CustomCommandInteraction } from "../../models/CustomCommandInteraction";
+import { CustomChatInputCommand, CustomCommandInteraction } from "../../models/CustomCommandInteraction";
 import { CustomButtonInteraction } from "../../models/CustomButtonInteraction";
 import { CustomSelectMenuInteraction } from "../../models/CustomSelectMenuInteraction";
 import { CustomModalInteraction } from "../../models/CustomModalInteraction";
@@ -18,17 +18,25 @@ export const modalsInstances = new Set<CustomModalInteraction>();
  * @param name The name of the command
  * @param description The description of the command
  * @param defaultPermission Whether the command should be enabled by default when the app is added to a guild
+ * @param type The type of the command
  * 
  * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
  */
-export function RegisterCommandInteraction(name: string, description: string, defaultPermission = true, type: ApplicationCommandType = 1) {
+export function RegisterCommandInteraction(
+    name: string,
+    description: string,
+    defaultPermission = true,
+    type: ApplicationCommandType = 1
+) {
     return function <T extends { new(...args: any[]): CustomCommandInteraction<CommandInteraction> }>(clazz: T) {
-        clazz.prototype.name = name;
-        clazz.prototype.description = description;
-        clazz.prototype.defaultPermission = defaultPermission;
-        clazz.prototype.type = type;
+        const instance = new clazz();
 
-        commandsInstances.add(clazz.prototype);
+        Object.defineProperty(instance, "name", { value: name, writable: false });
+        if (type === 1) Object.defineProperty(instance, "description", { value: description, writable: false });
+        Object.defineProperty(instance, "defaultPermission", { value: defaultPermission, writable: false });
+        Object.defineProperty(instance, "type", { value: type, writable: false });
+
+        commandsInstances.add(instance);
 
         return clazz;
     };
@@ -42,9 +50,11 @@ export function RegisterCommandInteraction(name: string, description: string, de
  */
 export function RegisterButtonInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomButtonInteraction }>(clazz: T) {
-        clazz.prototype.name = id;
+        const instance = new clazz();
 
-        buttonsInstances.add(clazz.prototype);
+        Object.defineProperty(instance, "name", { value: id, writable: false });
+
+        buttonsInstances.add(instance);
 
         return clazz;
     };
@@ -58,9 +68,11 @@ export function RegisterButtonInteraction(id: string) {
  */
 export function RegisterSelectMenuInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomSelectMenuInteraction }>(clazz: T) {
-        clazz.prototype.name = id;
+        const instance = new clazz();
 
-        selectMenusInstances.add(clazz.prototype);
+        Object.defineProperty(instance, "name", { value: id, writable: false });
+
+        selectMenusInstances.add(instance);
 
         return clazz;
     };
@@ -74,9 +86,11 @@ export function RegisterSelectMenuInteraction(id: string) {
  */
 export function RegisterModalInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomModalInteraction }>(clazz: T) {
-        clazz.prototype.name = id;
+        const instance = new clazz();
 
-        modalsInstances.add(clazz.prototype);
+        Object.defineProperty(instance, "name", { value: id, writable: false });
+
+        modalsInstances.add(instance);
 
         return clazz;
     };

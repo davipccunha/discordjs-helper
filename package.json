@@ -1,14 +1,14 @@
 {
   "name": "@davipccunha/discordjs-helper",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "A package that contains some useful functions to complement discord.js library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "patch": "tsup && npm version --no-git-tag-version -f patch && npm publish",
-    "minor": "tsup && npm version --no-git-tag-version -f minor && npm publish"
+    "patch": "npm version --no-git-tag-version -f patch && tsup && npm publish",
+    "minor": "npm version --no-git-tag-version -f minor && tsup && npm publish"
   },
   "author": "davipccunha",
   "license": "ISC",

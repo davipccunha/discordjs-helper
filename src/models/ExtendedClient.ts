@@ -1,7 +1,7 @@
-import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
+import { ApplicationCommandDataResolvable, ApplicationCommandType, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
 import { commandsInstances, buttonsInstances, selectMenusInstances, modalsInstances } from "../utils/decorators/RegisterInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
-import { CustomCommandInteraction } from "./CustomCommandInteraction";
+import { CustomChatInputCommand, CustomCommandInteraction, CommandOption } from "./CustomCommandInteraction";
 import { CustomInteraction } from './CustomInteraction';
 import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
@@ -113,8 +113,7 @@ export class ExtendedClient extends Client {
 
     protected async createCommands(guild: Guild) {
         for (const command of this.commands.values()) {
-            const discordCommand = command as ApplicationCommandDataResolvable;
-            await guild.commands.create(discordCommand).catch(console.error);
+            await guild.commands.create(command as ApplicationCommandDataResolvable).catch(console.error);
         }
     }
 
