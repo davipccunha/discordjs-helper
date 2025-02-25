@@ -31,18 +31,26 @@ export interface CustomCommandInteraction<K extends CommandInteraction> extends 
 }
 
 
-
+/**
+ * Defines a custom chat input command. Chat input commands should implement this interface
+ */
 export interface CustomChatInputCommand extends CustomCommandInteraction<ChatInputCommandInteraction> {
     readonly type: ApplicationCommandType.ChatInput;
     readonly description: string;
     readonly options?: CommandOption[];
 }
 
+/**
+ * Defines a custom message command. Message commands should implement this interface
+ */
 export interface CustomMessageCommand extends CustomCommandInteraction<MessageContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.Message;
     readonly description: never;
 }
 
+/**
+ * Defines a custom user command. User commands should implement this interface
+ */
 export interface CustomUserCommand extends CustomCommandInteraction<UserContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.User;
     readonly description: never;

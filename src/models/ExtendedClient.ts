@@ -46,7 +46,7 @@ export class ExtendedClient extends Client {
      * @param commands The commands to register
      * 
      * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterCommandInteraction` instead
-     * @see RegisterCommandInteraction
+     * @see RegisterChatInputCommandInteraction
      */
     public async registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]) {
         for (const command of commands) {
@@ -93,6 +93,11 @@ export class ExtendedClient extends Client {
         }
     }
 
+    /**
+     * Caches the interactions annotated with the @Register...Interaction decorators
+     * 
+     * @note This method is intended for TypeScript users. JavaScript users should use the explicit methods to register the interactions
+     */
     protected async registerInteractions() {
         for (const command of commandsInstances) {
             this.commands.set(command.name, command);
@@ -111,12 +116,21 @@ export class ExtendedClient extends Client {
         }
     }
 
+    /**
+     * Loads the cached commands to a guild
+     * @param guild The guild to create the commands in
+     */
     protected async createCommands(guild: Guild) {
         for (const command of this.commands.values()) {
             await guild.commands.create(command as ApplicationCommandDataResolvable).catch(console.error);
         }
     }
 
+    /**
+     * Deletes a command from a guild
+     * @param commandName The registered name of the command to delete
+     * @param guild The guild to delete the command from
+     */
     protected async unregisterCommand(commandName: string, guild: Guild) {
         guild.commands.create({
             name: commandName,
@@ -149,6 +163,11 @@ export class ExtendedClient extends Client {
         });
     }
 
+    /**
+     * Deletes a list of commands from the specified guilds
+     * @param commandsNames The registered names of the commands to delete
+     * @param guildIDs The IDs of the guilds to delete the commands from. Defaults to all guilds the bot is in
+     */
     public async deleteCommands(commandsNames: string[], guildIDs: string[] = []) {
         this.once('ready', async () => {
             if (guildIDs.length === 0) {
