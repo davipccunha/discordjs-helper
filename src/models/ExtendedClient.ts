@@ -1,11 +1,11 @@
-import { ApplicationCommandDataResolvable, ApplicationCommandType, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
-import { commandsInstances, buttonsInstances, selectMenusInstances, modalsInstances } from "../utils/decorators/RegisterInteraction";
+import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
+import { MessageEmbedBuilder } from "../utils/builders/MessageEmbedBuilder";
+import { buttonsInstances, commandsInstances, modalsInstances, selectMenusInstances } from "../utils/decorators/RegisterInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
-import { CustomChatInputCommand, CustomCommandInteraction, CommandOption } from "./CustomCommandInteraction";
+import { CustomCommandInteraction } from "./CustomCommandInteraction";
 import { CustomInteraction } from './CustomInteraction';
 import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
-import { MessageEmbedBuilder } from "../utils/builders/MessageEmbedBuilder";
 
 export class ExtendedClient extends Client {
     protected readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
