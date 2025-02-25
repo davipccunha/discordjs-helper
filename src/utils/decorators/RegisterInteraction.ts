@@ -29,7 +29,7 @@ export function RegisterChatInputCommandInteraction(
     return function <T extends { new(...args: any[]): CustomChatInputCommand }>(clazz: T) {
         const instance = new clazz();
 
-        if (!instance.name) Object.defineProperty(instance, "name", { value: name, writable: false });
+        if (!instance.name) Object.defineProperty(instance, "name", { value: name.toLowerCase(), writable: false });
         if (!instance.description) Object.defineProperty(instance, "description", { value: description, writable: false });
         if (!instance.defaultPermission) Object.defineProperty(instance, "defaultPermission", { value: defaultPermission, writable: false });
         Object.defineProperty(instance, "type", { value: ApplicationCommandType.ChatInput, writable: false });
