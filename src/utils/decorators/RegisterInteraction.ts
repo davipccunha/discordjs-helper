@@ -20,7 +20,7 @@ export const modalsInstances = new Set<CustomModalInteraction>();
  * @param defaultPermission Whether the command should be enabled by default when the app is added to a guild
  * @param type The type of the command
  * 
- * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
+ * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
 export function RegisterCommandInteraction(
     name: string,
@@ -46,7 +46,7 @@ export function RegisterCommandInteraction(
  * Decorating a button interaction class will automatically register it to the client
  * @param id The id of the button
  * 
- * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
+ * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
 export function RegisterButtonInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomButtonInteraction }>(clazz: T) {
@@ -64,7 +64,7 @@ export function RegisterButtonInteraction(id: string) {
  * Decorating a select menu interaction class will automatically register it to the client
  * @param id The id of the select menu
  * 
- * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
+ * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
 export function RegisterSelectMenuInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomSelectMenuInteraction }>(clazz: T) {
@@ -82,7 +82,7 @@ export function RegisterSelectMenuInteraction(id: string) {
  * Decorating a modal interaction class will automatically register it to the client
  * @param id The id of the modal
  * 
- * @note Currently, if you use this decorator, you must import the module in which the interaction's is defined due to how Node.js loads modules
+ * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
 export function RegisterModalInteraction(id: string) {
     return function <T extends { new(...args: any[]): CustomModalInteraction }>(clazz: T) {
