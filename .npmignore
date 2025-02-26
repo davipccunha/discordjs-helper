@@ -1,6 +1,7 @@
 /src
 /node_modules
 /typings
+/docs-site
 
 tsconfig.json
 tsup.config.ts

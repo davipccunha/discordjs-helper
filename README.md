@@ -31,8 +31,8 @@ import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBit
 @RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
-    type!: ApplicationCommandType.ChatInput;
     description!: string;
+    type!: ApplicationCommandType.ChatInput;
     defaultPermission!: boolean;
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
@@ -51,21 +51,19 @@ import path from 'path';
 import { pathToFileURL } from 'url';
 import { ExtendedClient, recursiveFiles } from "@davipccunha/discordjs-helper";
 
-setConstants();
-
 const client = new ExtendedClient("TOKEN GOES HERE");
 
-// This is necessary due to how Node.js loads and runs modules
+// This is necessary due to how Node.js loads modules
 await registerInteractions();
 
 // This should be called after registering the commands
-// This function caches the registered interactions, starts the bot and start listening for interactions being created
+// This function caches the registered interactions, starts the bot and starts listening for interactions being created
 client.start(true);
 
 // This function registers the cached commands to the guilds passed as parameters (it registers to all if no parameter is passed)
 client.loadCommands("GUILD ID 1", "GUILD ID 2", ...);
 
-// This code gets all files inside the dist/interactions folder and loads them so interactions decorated with @Register<Type>Interaction are correctly registered
+// This code gets all files inside the dist/interactions folder and imports them so they are loaded and interactions decorated with @Register...Interaction are correctly registered
 async function registerInteractions() {
     const interactions = await recursiveFiles("dist/interactions");
     for (const interaction of interactions) {
@@ -77,11 +75,6 @@ async function registerInteractions() {
         await import(fileUrl);
     }
 };
-
-// This resets some constants such as error messages 
-function setConstants() {
-    ErrorMessages.NoPermission = "You don't have permission to do that";
-};
 ```
 
 ### Together, the two code snippets above is all there is to get your first slash command working.
@@ -91,14 +84,14 @@ The example provided on how to register the commands is a simple way of loading 
 # Reminders
 For interactions decorated with @Register...Interaction, the module in which they are defined must be imported somewhere in the main program due to how Node.js loads modules
 
-You can always register all your interactions using one of the following methods in Extended Client: 
+You can always register all your interactions using one of the following methods from ExtendedClient: 
 - registerCommands()
 - registerButtons()
 - registerSelectMenus()
 - registerModals()
-and passing false as argument to the ExtendedClient#start() method
+and passing false as argument to the ExtendedClient#start() method (to disable auto-register)
 
-Then, the package handles the rest, including when an interaction is created
+Then, the package handles the rest, including when interactions are created
 
 # Found a problem?
 Please let me know of any problems found by opening an issue at [GitHub issue](https://github.com/davipccunha/discordjs-helper/issues). If you have a suggestion or just want to contact me, please send an email to davipccunha@gmail.com

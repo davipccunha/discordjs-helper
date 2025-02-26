@@ -131,3 +131,5 @@ dist
 *.zip
 package-lock.json
 .vscode/
+
+docs-site/build/
