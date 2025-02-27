@@ -21,7 +21,7 @@ export const modalsInstances = new Set<CustomModalInteraction>();
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterChatInputCommandInteraction(
+export function RegisterChatInputCommand(
     name: string,
     description: string,
     defaultPermission = true
@@ -47,7 +47,7 @@ export function RegisterChatInputCommandInteraction(
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterMessageCommandInteraction(
+export function RegisterMessageCommand(
     name: string,
     defaultPermission = true
 ) {
@@ -72,7 +72,7 @@ export function RegisterMessageCommandInteraction(
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterUserCommandInteraction(
+export function RegisterUserCommand(
     name: string,
     defaultPermission = true
 ) {
@@ -95,7 +95,7 @@ export function RegisterUserCommandInteraction(
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterButtonInteraction(id: string) {
+export function RegisterButton(id: string) {
     return function <T extends { new(...args: any[]): CustomButtonInteraction }>(clazz: T) {
         const instance = new clazz();
 
@@ -113,7 +113,7 @@ export function RegisterButtonInteraction(id: string) {
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterSelectMenuInteraction(id: string) {
+export function RegisterSelectMenu(id: string) {
     return function <T extends { new(...args: any[]): CustomSelectMenuInteraction }>(clazz: T) {
         const instance = new clazz();
 
@@ -131,7 +131,7 @@ export function RegisterSelectMenuInteraction(id: string) {
  * 
  * @note If you use this decorator, you must import/load the module in which the interaction is defined
  */
-export function RegisterModalInteraction(id: string) {
+export function RegisterModal(id: string) {
     return function <T extends { new(...args: any[]): CustomModalInteraction }>(clazz: T) {
         const instance = new clazz();
 
