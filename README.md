@@ -25,14 +25,13 @@ npm install @davipccunha/discordjs-helper
 ## Creating a new slash command
 ```typescript
 import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
-import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
 @RegisterChatInputCommandInteraction("ping", "Ping the bot!")
 @RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
     description!: string;
-    type!: ApplicationCommandType.ChatInput;
     defaultPermission!: boolean;
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
