@@ -10,23 +10,24 @@ It takes three arguments:
 
 `name` - The name of the command  
 `description` - The description of the command  
-`defaultPermission?` (Defaults to `true`) -  Whether the command should be enabled by default when the app is added to a guild
+`defaultPermission?` -  Whether the command should be enabled by default when the app is added to a guild. Defaults to `true`
 
-<b>If you use this decorator, you must load the module in which the interaction's is defined</b>
+> If you use this decorator, you must load the module in which the interaction's is defined
 
 ## Example
 ```typescript
-import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommandInteraction } from "@davipccunha/discordjs-helper";
-import { ChatInputCommandInteraction } from "discord.js";
+import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommand } from "@davipccunha/discordjs-helper";
+import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
 
-@RegisterChatInputCommandInteraction("ping", "Ping the bot!", true)
+@RegisterChatInputCommand("ping", "Ping the bot!")
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
     description!: string;
+    type!: ApplicationCommandType.ChatInput;
     defaultPermission!: boolean;
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
-        await interaction.reply("Pong!").catch(console.error);
+        await interaction.reply('Pong!').catch(console.error);
     }
 }
 ```

@@ -1,6 +1,6 @@
+import { BaseInteraction, InteractionReplyOptions, InteractionResponse, Message, StringSelectMenuInteraction } from 'discord.js';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
-import { BaseInteraction, InteractionReplyOptions, InteractionResponse, Message, StringSelectMenuInteraction } from 'discord.js';
 
 export function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -43,7 +43,7 @@ function extendArray() {
         value: function () {
             return this[Math.floor(Math.random() * this.length)];
         },
-        
+
         writable: true,
         configurable: true,
         enumerable: false

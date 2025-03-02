@@ -4,11 +4,11 @@
 
 # About
 ## Easily create interactions with type safety
-discordjs-helper is a Node.js module written in TypeScript that allows you to more easily create and register interactions to the Discord API and discordjs library. This package contains:
+discordjs-helper allows you to more easily create and register interactions to the Discord API. It ensures type safety and avoid runtime errors. This package contains:
 
 - Interfaces to implement and consistently define your interactions
-- Easier to use EmbedBuilder
 - Decorators to help with common verifications such as users' permissions
+- Extensions to discordjs' classes like BaseInteraction#replyOrFollowUp()
 
 </br>
 
@@ -24,26 +24,27 @@ npm install @davipccunha/discordjs-helper
 
 ## Creating a new slash command
 ```typescript
-import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommandInteraction, RequirePermission } from "@davipccunha/discordjs-helper";
-import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
+import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommand, RequireMemberPermission } from "@davipccunha/discordjs-helper";
+import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
-@RegisterChatInputCommandInteraction("ping", "Ping the bot!")
+@RegisterChatInputCommand("ping", "Ping the bot!")
 @RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
+    type!: ApplicationCommandType.ChatInput;
     description!: string;
     defaultPermission!: boolean;
 
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
-        await interaction.reply("Pong!").catch(console.error);
+        await interaction.reply('Pong!').catch(console.error);
     }
 }
 ```
 
-The class above defines a Chat Input Command Interaction. It contains the information to create the command and a method `execute()` that is run when a command interaction with the same name as the class' attribute `name` is created on Discord.
+The class above defines a chat input command. It contains the information to create the command and a method `execute()`, that is run when a command interaction with the same name as the class' attribute `name` is created on Discord.
 
 ## Registering slash commands
-Commands should be either registered using the `ExtendedClient#registerCommands()` method or by decorating its class with `@RegisterCommandInteraction(name, description)` and then sent to Discord API using `ExtendedClient#loadCommands()`. Due to how Node.js loads the modules, a module that contains a command class decorated with @RegisterCommandInteraction must be imported in some point of your program
+Commands should be either registered using the `ExtendedClient#registerCommands()` method or by decorating its class with `@Register...Command(name)` and then sent to Discord API using `ExtendedClient#loadCommands()`. Due to how Node.js loads the modules, a module that contains a command class decorated with @Register...Command must be imported in some point of your program
 
 ```typescript
 import path from 'path';
@@ -62,7 +63,7 @@ client.start(true);
 // This function registers the cached commands to the guilds passed as parameters (it registers to all if no parameter is passed)
 client.loadCommands("GUILD ID 1", "GUILD ID 2", ...);
 
-// This code gets all files inside the dist/interactions folder and imports them so they are loaded and interactions decorated with @Register...Interaction are correctly registered
+// This code gets all files inside the dist/interactions folder and imports them so they are loaded and interactions decorated with @Register... are correctly registered
 async function registerInteractions() {
     const interactions = await recursiveFiles("dist/interactions");
     for (const interaction of interactions) {
@@ -81,7 +82,7 @@ The example provided on how to register the commands is a simple way of loading 
 <br>
 
 # Reminders
-For interactions decorated with @Register...Interaction, the module in which they are defined must be imported somewhere in the main program due to how Node.js loads modules
+For interactions decorated with @Register..., the module in which they are defined must be imported somewhere in the main program due to how Node.js loads modules
 
 You can always register all your interactions using one of the following methods from ExtendedClient: 
 - registerCommands()

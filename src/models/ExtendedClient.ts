@@ -8,10 +8,10 @@ import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
 
 export class ExtendedClient extends Client {
-    protected readonly commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
-    protected readonly buttons: Collection<string, CustomButtonInteraction> = new Collection();
-    protected readonly selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
-    protected readonly modals: Collection<string, CustomModalInteraction> = new Collection();
+    protected readonly _commands: Collection<string, CustomCommandInteraction<CommandInteraction>> = new Collection();
+    protected readonly _buttons: Collection<string, CustomButtonInteraction> = new Collection();
+    protected readonly _selectMenus: Collection<string, CustomSelectMenuInteraction> = new Collection();
+    protected readonly _modals: Collection<string, CustomModalInteraction> = new Collection();
 
     constructor(token: string) {
         super({
@@ -45,12 +45,12 @@ export class ExtendedClient extends Client {
      * Caches the commands to respond to their interactions once they are triggered
      * @param commands The commands to register
      * 
-     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterCommandInteraction` instead
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@Register...Command` instead
      * @see RegisterChatInputCommandInteraction
      */
-    public async registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]) {
+    public async registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]): Promise<void> {
         for (const command of commands) {
-            this.commands.set(command.name, command);
+            this._commands.set(command.name, command);
         }
     }
 
@@ -58,12 +58,12 @@ export class ExtendedClient extends Client {
      * Caches the buttons to respond to their interactions once they are triggered
      * @param buttons The buttons to register
      * 
-     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButtonInteraction` instead
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButton` instead
      * @see RegisterButtonInteraction
      */
     public async registerButtons(...buttons: CustomInteraction<ButtonInteraction>[]) {
         for (const button of buttons) {
-            this.buttons.set(button.name, button);
+            this._buttons.set(button.name, button);
         }
     }
 
@@ -71,12 +71,12 @@ export class ExtendedClient extends Client {
      * Caches the select menus to respond to their interactions once they are triggered
      * @param selectMenus The select menus to register
      * 
-     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterSelectMenuInteraction` instead
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterSelectMenu` instead
      * @see RegisterSelectMenuInteraction
      */
     public async registerSelectMenus(...selectMenus: CustomInteraction<StringSelectMenuInteraction>[]) {
         for (const selectMenu of selectMenus) {
-            this.selectMenus.set(selectMenu.name, selectMenu);
+            this._selectMenus.set(selectMenu.name, selectMenu);
         }
     }
 
@@ -84,35 +84,35 @@ export class ExtendedClient extends Client {
      * Caches the modals to respond to their interactions once they are triggered
      * @param modals The modals to register
      * 
-     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModalInteraction` instead
+     * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModal` instead
      * @see RegisterModalInteraction
      */
     public async registerModals(...modals: CustomInteraction<ModalSubmitInteraction>[]) {
         for (const modal of modals) {
-            this.modals.set(modal.name, modal);
+            this._modals.set(modal.name, modal);
         }
     }
 
     /**
-     * Caches the interactions annotated with the @Register...Interaction decorators
+     * Caches the interactions decorated with the @Register... decorators
      * 
      * @note This method is intended for TypeScript users. JavaScript users should use the explicit methods to register the interactions
      */
     protected async registerInteractions() {
         for (const command of commandsInstances) {
-            this.commands.set(command.name, command);
+            this._commands.set(command.name, command);
         }
 
         for (const button of buttonsInstances) {
-            this.buttons.set(button.name, button);
+            this._buttons.set(button.name, button);
         }
 
         for (const selectMenu of selectMenusInstances) {
-            this.selectMenus.set(selectMenu.name, selectMenu);
+            this._selectMenus.set(selectMenu.name, selectMenu);
         }
 
         for (const modal of modalsInstances) {
-            this.modals.set(modal.name, modal);
+            this._modals.set(modal.name, modal);
         }
     }
 
@@ -121,7 +121,7 @@ export class ExtendedClient extends Client {
      * @param guild The guild to create the commands in
      */
     protected async createCommands(guild: Guild) {
-        for (const command of this.commands.values()) {
+        for (const command of this._commands.values()) {
             await guild.commands.create(command as ApplicationCommandDataResolvable).catch(console.error);
         }
     }
@@ -217,22 +217,22 @@ export class ExtendedClient extends Client {
 
         this.on('interactionCreate', async interaction => {
             if (interaction.isCommand()) {
-                const command = this.commands.get(interaction.commandName);
+                const command = this._commands.get(interaction.commandName);
                 if (!command) return;
 
                 await command.execute(interaction, this);
             } else if (interaction.isButton()) {
-                const button = this.buttons.get(interaction.customId);
+                const button = this._buttons.get(interaction.customId);
                 if (!button) return;
 
                 await button.execute(interaction, this);
             } else if (interaction.isStringSelectMenu()) {
-                const selectMenu = this.selectMenus.get(interaction.customId);
+                const selectMenu = this._selectMenus.get(interaction.customId);
                 if (!selectMenu) return;
 
                 await selectMenu.execute(interaction, this);
             } else if (interaction.isModalSubmit()) {
-                const modal = this.modals.get(interaction.customId);
+                const modal = this._modals.get(interaction.customId);
                 if (!modal) return;
 
                 await modal.execute(interaction, this);
@@ -241,13 +241,13 @@ export class ExtendedClient extends Client {
     }
 
     /**
-     * Logs the bot, registers the interactions and starts listening to the interactionCreate event
-     * @param registerInteractions This should be set to `false` if you are not using TS or prefer not to use the decorators to the interactions
+     * Logs the bot, registers the interactions and starts listening for interactions creation
+     * @param autoRegisterInteractions This should be set to `false` if you are not using TS or not using the decorators to register the interactions
      */
-    async start(registerInteractions = true) {
+    public async start(autoRegisterInteractions = true) {
         await this.login();
 
-        if (registerInteractions) await this.registerInteractions();
+        if (autoRegisterInteractions) await this.registerInteractions();
 
         await this.handleEvents();
     }

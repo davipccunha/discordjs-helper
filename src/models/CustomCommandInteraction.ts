@@ -26,7 +26,6 @@ export type StringCommandOption = CommandOption & {
 export interface CustomCommandInteraction<K extends CommandInteraction> extends CustomInteraction<K> {
     readonly type: ApplicationCommandType;
     readonly defaultPermission: boolean;
-    readonly description: string;
     execute(interaction: K, client: ExtendedClient): Promise<void>;
 }
 
@@ -45,7 +44,6 @@ export interface CustomChatInputCommand extends CustomCommandInteraction<ChatInp
  */
 export interface CustomMessageCommand extends CustomCommandInteraction<MessageContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.Message;
-    readonly description: never;
 }
 
 /**
@@ -53,5 +51,4 @@ export interface CustomMessageCommand extends CustomCommandInteraction<MessageCo
  */
 export interface CustomUserCommand extends CustomCommandInteraction<UserContextMenuCommandInteraction> {
     readonly type: ApplicationCommandType.User;
-    readonly description: never;
 }
