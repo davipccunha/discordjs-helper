@@ -22,7 +22,7 @@ export class ButtonButton implements CustomButtonInteraction {
     name!: string;
 
     async execute(interaction: ButtonInteraction, client: ExtendedClient): Promise<void> {
-        await interaction.reply("Button clicked!");
+        await interaction.reply("Button clicked!").catch(console.error);
     }
 }
 ```

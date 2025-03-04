@@ -24,7 +24,7 @@ Caches the commands to respond to their interactions once they are triggered.
 > *See [@RegisterChatInputCommand](../decorators/registers/register-chat-input-command.md)*
 
 #### Parameters
-`...commands: CustomCommandInteraction<CommandInteraction>` - The commands instances to register
+`...commands: CustomCommandInteraction<CommandInteraction>` - The custom commands instances to register
 
 #### Example
 ```typescript
@@ -41,14 +41,46 @@ client.registerCommands(new PingCommand(), new LengthCommand(), new GetIDCommand
 ___
 
 ### registerButtons()
-`registerButtons(...buttons: CustomInteraction<ButtonInteraction>[]): Promise<void>`  
+`registerButtons(...buttons: CustomButtonInteraction[]): Promise<void>`  
 Caches the buttons to respond to their interactions once they are triggered.
 
 > This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButton` instead  
 > *See [@RegisterButton](../decorators/registers/register-button.md)*
 
 #### Parameters
-`...buttons: CustomInteraction<ButtonInteraction>` - The buttons interactions instances to register
+`...buttons: CustomButtonInteraction` - The custom buttons interactions instances to register
+
+#### Example
+```typescript
+import { ExtendedClient } from "@davipccunha/discordjs-helper";
+import { ButtonButton } from "./interactions/buttons/ButtonButton";
+
+const client = new ExtendedClient("TOKEN GOES HERE");
+
+client.registerButtons(new ButtonButton());
+```
+
+___
+
+### registerModals()
+`registerModals(...modals: CustomModalInteraction[]): Promise<void>`
+Caches the modals to respond to modal submit interactions once they are triggered.
+
+> This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModal` instead  
+> *See [@RegisterModal](../decorators/registers/register-modal.md)*
+
+#### Parameters
+`...modals: CustomModalInteraction` - The custom modals interactions instances to register
+
+#### Example
+```typescript
+import { ExtendedClient } from "@davipccunha/discordjs-helper";
+import { ModalModal } from "./interactions/modals/ModalModal";
+
+const client = new ExtendedClient("TOKEN GOES HERE");
+
+client.registerModals(new ModalModal());
+```
 
 ___
 
