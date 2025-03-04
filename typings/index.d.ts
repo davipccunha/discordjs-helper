@@ -23,7 +23,7 @@ declare module 'discord.js' {
         * @param reply The reply to be sent.
         * @returns InteractionResponse, if followed up, or Message, if replied.
         */
-        replyOrFollowUp(reply: InteractionReplyOptions): Promise<Message<boolean>> | Promise<InteractionResponse<boolean>>;
+        replyOrFollowUp(reply: InteractionReplyOptions | string): Promise<Message<boolean>> | Promise<InteractionResponse<boolean>>;
     }
 
     interface StringSelectMenuInteraction {

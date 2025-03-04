@@ -1,0 +1,8 @@
+{
+    "label": "Extensions",
+    "position": 5,
+    "link": {
+        "type": "generated-index",
+        "description": "discordjs-helper also extends some classes that already exist in discord.js to simplify some useful methods."
+    }
+}

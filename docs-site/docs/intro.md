@@ -6,6 +6,8 @@ sidebar_position: 1
 ## About
 discordjs-helper is a library that extends the discordjs npm library and allows you to more easily create and register interactions to the Discord API. It is mostly helpful for TypeScript users. It adds types and interfaces for type safety, decorators to more easily do repetitive tasks and functions that enhance some of discordjs functionalities. This Introduction will guide you through the most useful features and how to use them.
 
+___
+
 ## ExtendedClient
 [ExtendedClient](./classes/extended-client.md) is the main class of the library. It extends the normal discordjs [Client](https://discord.js.org/docs/packages/discord.js/14.18.0/Client:Class) by adding some useful attributes, methods and implicitly running some common tasks so you don't have to do it each time.  
 You should instantiate it in your main file, passing the bot's token as argument.
@@ -14,6 +16,8 @@ import { ExtendedClient } from "@davipccunha/discordjs-helper";
 
 const client = new ExtendedClient("TOKEN GOES HERE");
 ```
+
+___
 
 ## Interfaces
 One of the main features of the discordjs-helper module is interfaces. [Interfaces](./category/interfaces) define a model for classes that implement them. This ensures type safety and is less prone to errors, mainly for defining interactions such as commands. Let's see [CustomChatInputCommand](./interfaces/custom-chat-input-command.md) as example.
@@ -42,6 +46,8 @@ export class PingCommand implements CustomChatInputCommand {
 
 This defines a chat input command. By implementing the [CustomChatInputCommand](./interfaces/custom-chat-input-command.md) interface, we ensure that our PingCommand class has all needed attributes and methods to correctly define a command.
 
+___
+
 ## Decorators
 Another main feature of this module is decorators. [Decorators](./category/decorators) are special functions that can modify the behavior of classes, functions, variables, etc.. All decorators in this module are applied to classes. They are used to simplify and reuse code that can become very repetitive.
 
@@ -67,6 +73,13 @@ export class PingCommand implements CustomChatInputCommand {
 > Classes decorated with [RegisterChatInputCommand](./decorators/registers/register-chat-input-command.md) must have their module loaded/imported somewhere in the main code
 
 [@RequireMemberPermission](./decorators/permission/require-member-pemission.md) implicitly checks for user's permission in the guild scope, and only executes the command if the user who triggered its interaction has Administrator permission guild-wise.
+
+___
+
+## Extensions
+[Type extensions](./category/extensions) are the way discordjs-helper extends pre-existing classes and adds helpful methods to them. They usually implement common utility codes such as BaseInteraction#replyOrFollowUp() and StringSelectMenuInteraction#clearSelection(). Refer to [Extensions](./category/extensions) for examples
+
+___
 
 ## Examples
 `src/interactions/commands/PingCommand.ts`

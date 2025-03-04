@@ -57,6 +57,7 @@ function extendArray() {
                 return this;
             }
 
+            // REVIEW: This could be optimized.
             while (result.length < number) {
                 let element: unknown = this.random();
 
@@ -81,7 +82,8 @@ function extendDiscordJS() {
 
 function extendBaseInteraction() {
     Object.defineProperty(BaseInteraction.prototype, 'replyOrFollowUp', {
-        value: async function (reply: InteractionReplyOptions): Promise<Message<boolean> | InteractionResponse<boolean>> {
+        value: async function (reply: InteractionReplyOptions | string): Promise<Message<boolean> | InteractionResponse<boolean>> {
+            reply = typeof reply === 'string' ? { content: reply } : reply;
             if (this.replied || this.deferred) {
                 return await this.followUp(reply);
             } else {
