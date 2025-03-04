@@ -12,6 +12,7 @@ title: ExtendedClient
 `token: string` - The bot token
 
 
+
 ### registerCommands()
 `registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]): Promise<void>`  
 Caches the commands to respond to their interactions once they are triggered.  
@@ -35,6 +36,7 @@ client.registerCommands(new PingCommand(), new LengthCommand(), new GetIDCommand
 ```
 
 
+
 ### start()
 `start(autoRegisterInteractions: boolean): Promise<void>`  
 Logs the bot, registers the interactions and starts listening for interactions creation.  
@@ -50,6 +52,7 @@ const client = new ExtendedClient("TOKEN GOES HERE");
 
 client.start();
 ```
+
 
 
 ### loadCommands()
@@ -73,3 +76,61 @@ client.loadCommands();
 ```
 
 > This method should be called only after the interactions are registered and the client is started
+
+
+
+### asMember()
+`asMember(guildID: string): Promise<GuildMember | null>`  
+Returns the member object representing the bot in the specified guild
+
+#### Parameters
+`guildID: string` - The ID of the guild to get the bot representation for
+
+Returns `null` if the bot's member representation could not be found
+
+#### Example
+```typescript
+import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommand, RequireMemberPermission } from "@davipccunha/discordjs-helper";
+import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
+
+@RegisterChatInputCommand("info", "Tag the bot")
+@RequireMemberPermission(PermissionFlagsBits.Administrator)
+export class InfoCommand implements CustomChatInputCommand {
+    name!: string;
+    description!: string;
+    type!: ApplicationCommandType.ChatInput;
+    defaultPermission!: boolean;
+
+    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
+        if (!interaction.guildId) return;
+
+        const member = await client.asMember(interaction.guildId);
+        if (!member) return;
+
+        await interaction.reply(member.toString()).catch(console.error);
+    }
+}
+```
+
+> This method should be called after the client is ready and the application must have members intent enabled
+
+
+
+### deleteCommands()
+`deleteCommands(commandsNames: string[], guildIDs: string[] = []): Promise<void>`  
+Deletes the specified commands in the specified guilds
+
+#### Parameters
+`commandsNames: string[]` - The names of the commands to be deleted  
+`guildIDs?: string[]` The guild IDs to delete the commands from. Defaults to all guilds the bot is in.  
+
+#### Example
+```typescript
+import { ExtendedClient } from "@davipccunha/discordjs-helper";
+
+const client = new ExtendedClient("TOKEN GOES HERE");
+
+client.once('ready', () => {
+    client.deleteCommands(['ping']);
+})
+```

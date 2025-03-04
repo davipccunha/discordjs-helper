@@ -1,4 +1,4 @@
-import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
+import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, GuildMember, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
 import { MessageEmbedBuilder } from "../utils/builders/MessageEmbedBuilder";
 import { buttonsInstances, commandsInstances, modalsInstances, selectMenusInstances } from "../utils/decorators/RegisterInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
@@ -168,7 +168,7 @@ export class ExtendedClient extends Client {
      * @param commandsNames The registered names of the commands to delete
      * @param guildIDs The IDs of the guilds to delete the commands from. Defaults to all guilds the bot is in
      */
-    public async deleteCommands(commandsNames: string[], guildIDs: string[] = []) {
+    public async deleteCommands(commandsNames: string[], guildIDs: string[] = []): Promise<void> {
         this.once('ready', async () => {
             if (guildIDs.length === 0) {
                 this.guilds.cache.forEach(async guild => {
@@ -195,7 +195,7 @@ export class ExtendedClient extends Client {
      * @param guildID The ID of the guild
      * @returns Member representation of the bot
      */
-    public async asMember(guildID: string) {
+    public async asMember(guildID: string): Promise<GuildMember | null> {
         if (!this.user) return null;
 
         const guild = await this.guilds.fetch(guildID).catch(console.error);
