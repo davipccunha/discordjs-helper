@@ -17,6 +17,9 @@ ___
 `registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]): Promise<void>`  
 Caches the commands to respond to their interactions once they are triggered.  
 
+> CustomCommandInteraction&lt;CommandInteraction> is the same as ([CustomChatInputCommand](./custom-chat-input-command.md) | [CustomMessageCommand](./custom-message-command.md) | [CustomUserCommand](./custom-user-command.md))  
+*See [CustomCommandInteraction](../interfaces/custom-command-interaction.md)*
+
 > This method is intended for JavaScript users. TypeScript users should use the decorator `@Register...Command` instead  
 > *See [@RegisterChatInputCommand](../decorators/registers/register-chat-input-command.md)*
 

@@ -1,6 +1,6 @@
 {
     "label": "Decorators",
-    "position": 3,
+    "position": 5,
     "link": {
         "type": "generated-index",
         "description": "Decorators are special functions that can modify the behavior of classes, functions, variables, etc.. All decorators in discordjs-helper are applied to classes. They are used to simplify and reuse code that are too repetitive."

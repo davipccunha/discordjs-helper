@@ -1,6 +1,6 @@
 {
     "label": "Interfaces",
-    "position": 2,
+    "position": 3,
     "link": {
         "type": "generated-index",
         "description": "Interfaces define a shape classes that implement them must have. This ensures type safety and is less prone to errors"
