@@ -11,7 +11,7 @@ It takes two arguments:
 `name` - The name of the command  
 `defaultPermission?` -  Whether the command should be enabled by default when the app is added to a guild. Defaults to `true`
 
-> **If you use this decorator, you must load the module in which the interaction's is defined**
+> If you use this decorator, you must load the module in which the interaction is defined
 
 ## Example
 ```typescript

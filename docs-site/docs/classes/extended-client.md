@@ -11,17 +11,17 @@ title: ExtendedClient
 #### Parameters
 `token: string` - The bot token
 
-
+___
 
 ### registerCommands()
 `registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]): Promise<void>`  
 Caches the commands to respond to their interactions once they are triggered.  
 
-#### Parameters
-`commands: CustomCommandInteraction<CommandInteraction>[]` - The commands instances to register
-
 > This method is intended for JavaScript users. TypeScript users should use the decorator `@Register...Command` instead  
-> *See [@RegisterChatInputCommand](../decorators/register-chat-input-command.md)*
+> *See [@RegisterChatInputCommand](../decorators/registers/register-chat-input-command.md)*
+
+#### Parameters
+`...commands: CustomCommandInteraction<CommandInteraction>` - The commands instances to register
 
 #### Example
 ```typescript
@@ -35,7 +35,19 @@ const client = new ExtendedClient("TOKEN GOES HERE");
 client.registerCommands(new PingCommand(), new LengthCommand(), new GetIDCommand());
 ```
 
+___
 
+### registerButtons()
+`registerButtons(...buttons: CustomInteraction<ButtonInteraction>[]): Promise<void>`  
+Caches the buttons to respond to their interactions once they are triggered.
+
+> This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButton` instead  
+> *See [@RegisterButton](../decorators/registers/register-button.md)*
+
+#### Parameters
+`...buttons: CustomInteraction<ButtonInteraction>` - The buttons interactions instances to register
+
+___
 
 ### start()
 `start(autoRegisterInteractions: boolean): Promise<void>`  
@@ -53,7 +65,7 @@ const client = new ExtendedClient("TOKEN GOES HERE");
 client.start();
 ```
 
-
+___
 
 ### loadCommands()
 `loadCommands(...guildIDs: string[]): Promise<void>`  
@@ -77,7 +89,7 @@ client.loadCommands();
 
 > This method should be called only after the interactions are registered and the client is started
 
-
+___
 
 ### asMember()
 `asMember(guildID: string): Promise<GuildMember | null>`  
@@ -114,7 +126,7 @@ export class InfoCommand implements CustomChatInputCommand {
 
 > This method should be called after the client is ready and the application must have members intent enabled
 
-
+___
 
 ### deleteCommands()
 `deleteCommands(commandsNames: string[], guildIDs: string[] = []): Promise<void>`  

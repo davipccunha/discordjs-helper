@@ -1,9 +1,8 @@
-import { ApplicationCommandDataResolvable, ButtonInteraction, Client, Collection, CommandInteraction, Guild, GuildMember, IntentsBitField, ModalSubmitInteraction, StringSelectMenuInteraction } from "discord.js";
+import { ApplicationCommandDataResolvable, Client, Collection, CommandInteraction, Guild, GuildMember, IntentsBitField } from "discord.js";
 import { MessageEmbedBuilder } from "../utils/builders/MessageEmbedBuilder";
 import { buttonsInstances, commandsInstances, modalsInstances, selectMenusInstances } from "../utils/decorators/RegisterInteraction";
 import { CustomButtonInteraction } from "./CustomButtonInteraction";
 import { CustomCommandInteraction } from "./CustomCommandInteraction";
-import { CustomInteraction } from './CustomInteraction';
 import { CustomModalInteraction } from "./CustomModalInteraction";
 import { CustomSelectMenuInteraction } from "./CustomSelectMenuInteraction";
 
@@ -61,7 +60,7 @@ export class ExtendedClient extends Client {
      * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButton` instead
      * @see RegisterButtonInteraction
      */
-    public async registerButtons(...buttons: CustomInteraction<ButtonInteraction>[]) {
+    public async registerButtons(...buttons: CustomButtonInteraction[]): Promise<void> {
         for (const button of buttons) {
             this._buttons.set(button.name, button);
         }
@@ -74,7 +73,7 @@ export class ExtendedClient extends Client {
      * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterSelectMenu` instead
      * @see RegisterSelectMenuInteraction
      */
-    public async registerSelectMenus(...selectMenus: CustomInteraction<StringSelectMenuInteraction>[]) {
+    public async registerSelectMenus(...selectMenus: CustomSelectMenuInteraction[]): Promise<void> {
         for (const selectMenu of selectMenus) {
             this._selectMenus.set(selectMenu.name, selectMenu);
         }
@@ -87,7 +86,7 @@ export class ExtendedClient extends Client {
      * @note This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModal` instead
      * @see RegisterModalInteraction
      */
-    public async registerModals(...modals: CustomInteraction<ModalSubmitInteraction>[]) {
+    public async registerModals(...modals: CustomModalInteraction[]): Promise<void> {
         for (const modal of modals) {
             this._modals.set(modal.name, modal);
         }
