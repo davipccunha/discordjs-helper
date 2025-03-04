@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs_site=self.webpackChunkdocs_site||[]).push([[583],{6107:(s,e,r)=>{r.r(e),r.d(e,{default:()=>d});var t=r(6347),c=r(4848);function d(){return(0,c.jsx)(t.rd,{to:"/discordjs-helper/docs/intro"})}}}]);
