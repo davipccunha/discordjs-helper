@@ -89,6 +89,7 @@ You can always register all your interactions using one of the following methods
 - registerButtons()
 - registerSelectMenus()
 - registerModals()
+
 and passing false as argument to the ExtendedClient#start() method (to disable auto-register)
 
 Then, the package handles the rest, including when interactions are created

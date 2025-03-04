@@ -46,10 +46,11 @@ This defines a chat input command. By implementing the [CustomChatInputCommand](
 Another main feature of this module is decorators. [Decorators](./category/decorators) are special functions that can modify the behavior of classes, functions, variables, etc.. All decorators in this module are applied to classes. They are used to simplify and reuse code that can become very repetitive.
 
 ```typescript
-import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommand } from "@davipccunha/discordjs-helper";
-import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
+import { CustomChatInputCommand, ExtendedClient, RegisterChatInputCommand, RequireMemberPermission } from "@davipccunha/discordjs-helper";
+import { ApplicationCommandType, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 
 @RegisterChatInputCommand("ping", "Ping the bot!")
+@RequireMemberPermission(PermissionFlagsBits.Administrator)
 export class PingCommand implements CustomChatInputCommand {
     name!: string;
     description!: string;
@@ -62,8 +63,10 @@ export class PingCommand implements CustomChatInputCommand {
 }
 ```
 
-[RegisterChatInputCommand](./decorators/registers/register-chat-input-command.md) automatically caches the command and executes the class' `execute` method when a chat input command with the same name as the class' is created. It should only be applied to classes that implement [CustomChatInputCommand](./interfaces/custom-chat-input-command.md).  
+[@RegisterChatInputCommand](./decorators/registers/register-chat-input-command.md) automatically caches the command and executes the class' `execute` method when a chat input command with the same name as the class' is created. It should only be applied to classes that implement [CustomChatInputCommand](./interfaces/custom-chat-input-command.md).  
 > Classes decorated with [RegisterChatInputCommand](./decorators/registers/register-chat-input-command.md) must have their module loaded/imported somewhere in the main code
+
+[@RequireMemberPermission](./decorators/permission/require-member-pemission.md) implicitly checks for user's permission in the guild scope, and only executes the command if the user who triggered its interaction has Administrator permission guild-wise.
 
 ## Examples
 `src/interactions/commands/PingCommand.ts`
