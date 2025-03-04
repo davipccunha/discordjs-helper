@@ -1,8 +1,0 @@
-{
-    "label": "Permissions",
-    "position": 2,
-    "link": {
-        "type": "generated-index",
-        "description": "Permission decorators are decorators applied to classes defining interactions to check for users' permissions before execution."
-    }
-}

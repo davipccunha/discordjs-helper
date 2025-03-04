@@ -1,8 +1,0 @@
-{
-    "label": "Registers",
-    "position": 1,
-    "link": {
-        "type": "generated-index",
-        "description": "Registers are decorators used to register interactions by decorating classes that define them."
-    }
-}
