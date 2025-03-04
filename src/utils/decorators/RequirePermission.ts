@@ -5,6 +5,7 @@ import { ErrorMessages } from "../../models/ErrorMessages";
 /**
  * Decorating an interaction class with this will make it so that it will only execute if the member has all of the specified permissions in the guild scope.
  * @param permissions The permissions to check for.
+ * @throws {Error} If the class does not have an 'execute' method.
  */
 export function RequireMemberPermission(...permissions: PermissionResolvable[]) {
     return function (constructor: Function) {
@@ -34,6 +35,7 @@ export function RequireMemberPermission(...permissions: PermissionResolvable[]) 
 /**
  * Decorating an interaction class with this will make it so that it will only execute if the member has all of the specified permissions in the interaction channel.
  * @param permissions The permissions to check for.
+ * @throws {Error} If the class does not have an 'execute' method.
  */
 export function RequireChannelPermission(...permissions: PermissionResolvable[]) {
     return function (constructor: Function) {
