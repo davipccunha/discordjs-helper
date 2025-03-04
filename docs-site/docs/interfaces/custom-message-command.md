@@ -11,7 +11,7 @@ The `CustomMessageCommand` interface defines a message command. Classes implemen
 `execute(interaction: MessageContextMenuCommandInteraction, client: ExtendedClient): Promise<void>` - The function to be executed when a message interaction with the same name as the class' attribute `name` is sent
 
 > This class only defines the command. It does not register nor load the command.  
-> *See [@RegisterMessageCommand](../decorators/register-message-command) and [ExtendedClient#registerCommands()](../category/decorators)*
+> *See [@RegisterMessageCommand](../decorators/registers/register-message-command) and [ExtendedClient#registerCommands()](../category/decorators)*
 
 ## Example
 ```typescript

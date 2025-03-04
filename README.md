@@ -10,6 +10,8 @@ discordjs-helper allows you to more easily create and register interactions to t
 - Decorators to help with common verifications such as users' permissions
 - Extensions to discordjs' classes like BaseInteraction#replyOrFollowUp()
 
+> **A complete documentation is available at https://davipccunha.github.io/discordjs-helper/docs/intro**
+
 </br>
 
 # Installation

@@ -4,7 +4,7 @@ title: RegisterChatInputCommand
 
 # `@RegisterChatInputCommand`
 ## About
-The `@RegisterChatInputCommand` decorator is applied to a class implementing the [CustomChatInputCommand](../interfaces/custom-chat-input-command) interface. It registers the command to the cache and listens for command interactions with the same name.
+The `@RegisterChatInputCommand` decorator is applied to a class implementing the [CustomChatInputCommand](../../interfaces/custom-chat-input-command) interface. It registers the command to the cache and listens for command interactions with the same name.
 
 It takes three arguments:
 

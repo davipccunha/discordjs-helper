@@ -4,7 +4,7 @@ title: RegisterUserCommand
 
 # `@RegisterUserCommand`
 ## About
-The `@RegisterUserCommand` decorator is applied to a class implementing the [CustomUserCommand](../interfaces/custom-user-command) interface. It registers the command to the cache and listens for command interactions with the same name.
+The `@RegisterUserCommand` decorator is applied to a class implementing the [CustomUserCommand](../../interfaces/custom-user-command) interface. It registers the command to the cache and listens for command interactions with the same name.
 
 It takes two arguments:
 

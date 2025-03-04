@@ -4,7 +4,7 @@ title: RegisterMessageCommand
 
 # `@RegisterMessageCommand`
 ## About
-The `@RegisterMessageCommand` decorator is applied to a class implementing the [CustomMessageCommand](../interfaces/custom-message-command) interface. It registers the command to the cache and listens for command interactions with the same name.
+The `@RegisterMessageCommand` decorator is applied to a class implementing the [CustomMessageCommand](../../interfaces/custom-message-command) interface. It registers the command to the cache and listens for command interactions with the same name.
 
 It takes two arguments:
 

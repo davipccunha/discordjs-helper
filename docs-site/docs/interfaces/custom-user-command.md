@@ -11,7 +11,7 @@ The `CustomUserCommand` interface defines a user command. Classes implementing i
 `execute(interaction: UserContextMenuCommandInteraction, client: ExtendedClient): Promise<void>` - The function to be executed when a user interaction with the same name as the class' attribute `name` is sent
 
 > This class only defines the command. It does not register nor load the command.  
-> *See [@RegisterUserCommand](../decorators/register-user-command) and [ExtendedClient#registerCommands()](../classes/extended-client.md#registercommands)*
+> *See [@RegisterUserCommand](../decorators/registers/register-user-command) and [ExtendedClient#registerCommands()](../classes/extended-client#registercommands)*
 
 ## Example
 ```typescript
