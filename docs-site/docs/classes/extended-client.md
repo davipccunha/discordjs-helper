@@ -15,7 +15,7 @@ ___
 
 ### registerCommands()
 `registerCommands(...commands: CustomCommandInteraction<CommandInteraction>[]): Promise<void>`  
-Caches the commands to respond to their interactions once they are triggered.  
+Caches the commands to respond to their interactions once they are created.  
 
 > CustomCommandInteraction&lt;CommandInteraction> is the same as ([CustomChatInputCommand](./custom-chat-input-command.md) | [CustomMessageCommand](./custom-message-command.md) | [CustomUserCommand](./custom-user-command.md))  
 *See [CustomCommandInteraction](../interfaces/custom-command-interaction.md)*
@@ -42,7 +42,7 @@ ___
 
 ### registerButtons()
 `registerButtons(...buttons: CustomButtonInteraction[]): Promise<void>`  
-Caches the buttons to respond to their interactions once they are triggered.
+Caches the buttons to respond to their interactions once they are created.
 
 > This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterButton` instead  
 > *See [@RegisterButton](../decorators/registers/register-button.md)*
@@ -63,8 +63,8 @@ client.registerButtons(new ButtonButton());
 ___
 
 ### registerModals()
-`registerModals(...modals: CustomModalInteraction[]): Promise<void>`
-Caches the modals to respond to modal submit interactions once they are triggered.
+`registerModals(...modals: CustomModalInteraction[]): Promise<void>`  
+Caches the modals to respond to modal submit interactions once they are created.
 
 > This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterModal` instead  
 > *See [@RegisterModal](../decorators/registers/register-modal.md)*
@@ -80,6 +80,28 @@ import { ModalModal } from "./interactions/modals/ModalModal";
 const client = new ExtendedClient("TOKEN GOES HERE");
 
 client.registerModals(new ModalModal());
+```
+
+___
+
+### registerSelectMenus()
+`registerSelectMenus(...selectMenus: CustomSelectMenuInteraction[]): Promise<void>`  
+Caches the select menus to respond to select menu submit interactions once they are created.
+
+> This method is intended for JavaScript users. TypeScript users should use the decorator `@RegisterSelectMenu` instead  
+> *See [@RegisterSelectMenu](../decorators/registers/register-select-menu.md)*
+
+#### Parameters
+`...selectMenus: CustomSelectMenuInteraction` - The custom select menus interactions instances to register
+
+#### Example
+```typescript
+import { ExtendedClient } from "@davipccunha/discordjs-helper";
+import { SelectSelectMenu } from "./interactions/selectMenus/SelectSelectMenu";
+
+const client = new ExtendedClient("TOKEN GOES HERE");
+
+client.registerSelectMenus(new SelectSelectMenu());
 ```
 
 ___

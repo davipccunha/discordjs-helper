@@ -82,6 +82,7 @@ The example provided on how to register the commands is a simple way of loading 
 <br>
 
 # Reminders
+To use decorators, you must enable them in your .tsconfig file `{"compilerOptions": {"experimentalDecorators": true}}`.  
 For interactions decorated with @Register..., the module in which they are defined must be imported somewhere in the main program due to how Node.js loads modules
 
 You can always register all your interactions using one of the following methods from ExtendedClient: 
