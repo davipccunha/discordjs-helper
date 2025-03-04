@@ -4,12 +4,12 @@ title: RequireChannelPermission
 
 # `@RequireChannelPermission`
 ## About
-The `@RequireChannelPermission` decorator is applied to a class implementing any [CustomInteraction interface](../../category/interfaces). It makes so that the `execute` method of the interaction is only run if the user triggering it has all permissions passed as argument in the channel scope.
+The `@RequireChannelPermission` decorator is applied to a class implementing any [CustomInteraction](../../category/interfaces) interface. It makes so that the `execute` method of the interaction is only run if the user triggering it has all permissions passed as argument in the channel scope.
 
 It takes any number of [PermissionResolvable](https://discord.js.org/docs/packages/discord.js/14.18.0/PermissionResolvable:TypeAlias) as arguments:
 
 `...permissions: PermissionResolvable[]` - The permissions to check for  
-___
+
 It throws an error if applied to a class that does not have an 'execute' method.
 
 ## Example
