@@ -44,7 +44,7 @@ export class PingCommand implements CustomChatInputCommand {
 }
 ```
 
-This defines a text chat input command. By implementing the [CustomChatInputCommand](./interfaces/custom-chat-input-command.md) interface, we ensure that the _PingCommand_ class has all the necessary attributes and methods to properly define a command.
+This defines a chat input command. By implementing the [CustomChatInputCommand](./interfaces/custom-chat-input-command.md) interface, we ensure that the `PingCommand` class has all the necessary attributes and methods to properly define a command.
 
 ___
 
