@@ -1,6 +1,6 @@
 {
   "name": "@davipccunha/discordjs-helper",
-  "version": "2.6.4",
+  "version": "2.7.0",
   "description": "A package that contains some useful functions to complement discord.js library",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -13,7 +13,7 @@
   "author": "davipccunha",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "discord.js": "^14.26.2"
   },
   "devDependencies": {
     "@types/node": "^20.9.1",

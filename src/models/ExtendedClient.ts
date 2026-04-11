@@ -145,7 +145,7 @@ export class ExtendedClient extends Client {
      * @param guildIDs The IDs of the guilds to create the commands in. If no IDs are provided, the commands will be created in all guilds the bot is in
      */
     public async loadCommands(...guildIDs: string[]) {
-        this.once('ready', async () => {
+        this.once('clientReady', async () => {
             if (guildIDs.length === 0) {
                 this.guilds.cache.forEach(async guild => {
                     await this.createCommands(guild);
@@ -208,7 +208,7 @@ export class ExtendedClient extends Client {
 
     // Logs a message when the client becomes ready and handle interactions (commands, buttons, select menus, modals)
     protected async handleEvents() {
-        this.once('ready', async () => {
+        this.once('clientReady', async () => {
             console.log(`Client logged in @ ${new Date().toLocaleString()}`);
 
             MessageEmbedBuilder.defaultFooter = { text: this.user!.username, iconURL: this.user!.displayAvatarURL({ forceStatic: false }) };
